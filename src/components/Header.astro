@@ -1,0 +1,120 @@
+---
+import { translations } from '../i18n/translations';
+import { currentLanguage } from '../store/language';
+import LanguageSelector from './LanguageSelector.astro';
+---
+
+<script>
+  import { translations } from '../i18n/translations';
+  import { currentLanguage } from '../store/language';
+  
+  currentLanguage.subscribe(() => {
+    const lang = currentLanguage.get();
+    const t = translations[lang].nav;
+    
+    const links = document.querySelectorAll('.nav-list a');
+    links[0].textContent = t.about;
+    links[1].textContent = t.program;
+    links[2].textContent = t.aboutUs;
+    links[3].textContent = t.contact;
+  });
+</script>
+
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <div class="logo">
+        <a href="/">AI Workshop</a>
+      </div>
+      <div class="nav-container">
+        <LanguageSelector />
+        <nav class="nav">
+          <ul class="nav-list">
+            <li><a href="#om">{translations[currentLanguage.get()].nav.about}</a></li>
+            <li><a href="#program">{translations[currentLanguage.get()].nav.program}</a></li>
+            <li><a href="#about-us">{translations[currentLanguage.get()].nav.aboutUs}</a></li>
+            <li><a href="#kontakt" class="btn btn-primary">{translations[currentLanguage.get()].nav.contact}</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-gray-200);
+    padding: var(--space-4) 0;
+    transition: all 0.3s ease;
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  .logo a {
+    color: var(--color-gray-900);
+    transition: color 0.3s ease;
+  }
+
+  .logo a:hover {
+    color: var(--color-primary);
+  }
+  
+  .nav-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .nav-list {
+    display: none;
+    list-style: none;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  .nav-list li a {
+    color: var(--color-gray-800);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+  }
+
+  .nav-list li a:hover {
+    color: var(--color-primary);
+    background-color: var(--color-gray-100);
+  }
+
+  .nav-list li a.btn {
+    color: var(--color-white);
+    background-color: var(--color-primary);
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .nav-list li a.btn:hover {
+    color: var(--color-white);
+    background-color: var(--color-primary-dark);
+  }
+
+  @media (min-width: 768px) {
+    .nav-list {
+      display: flex;
+    }
+  }
+</style>

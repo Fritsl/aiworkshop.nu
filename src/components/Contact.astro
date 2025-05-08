@@ -1,0 +1,207 @@
+---
+import { currentLanguage } from '../store/language';
+import { translations } from '../i18n/translations';
+---
+
+<script>
+  import { currentLanguage } from '../store/language';
+  import { translations } from '../i18n/translations';
+  
+  currentLanguage.subscribe(() => {
+    const lang = currentLanguage.get();
+    const t = translations[lang].contact;
+    
+    document.querySelector('.contact h2').textContent = t.title;
+    document.querySelector('.contact-info p').textContent = t.description;
+    
+    // Update form labels
+    document.querySelector('label[for="name"]').textContent = t.form.name;
+    document.querySelector('label[for="company"]').textContent = t.form.company;
+    document.querySelector('label[for="email"]').textContent = t.form.email;
+    document.querySelector('label[for="phone"]').textContent = t.form.phone;
+    document.querySelector('label[for="message"]').textContent = t.form.message;
+    document.querySelector('#sendEmail').textContent = t.form.send;
+  });
+</script>
+
+<section id="kontakt" class="section contact">
+  <div class="container">
+    <div class="contact-content">
+      <div class="contact-info" data-aos="fade-right">
+        <h2>{translations[currentLanguage.get()].contact.title}</h2>
+        <p>{translations[currentLanguage.get()].contact.description}</p>
+      </div>
+      
+      <div class="contact-form" data-aos="fade-left">
+        <div class="contact-fields">
+          <div class="form-group">
+            <label for="name">{translations[currentLanguage.get()].contact.form.name}</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="company">{translations[currentLanguage.get()].contact.form.company}</label>
+            <input type="text" id="company" name="company" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">{translations[currentLanguage.get()].contact.form.email}</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">{translations[currentLanguage.get()].contact.form.phone}</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          
+          <div class="form-group">
+            <label for="message">{translations[currentLanguage.get()].contact.form.message}</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          
+          <!-- Hidden anti-spam field -->
+          <div class="visually-hidden">
+            <input type="checkbox" id="contact_me_by_fax" name="contact_me_by_fax" tabindex="-1">
+            <label for="contact_me_by_fax">Contact me by fax</label>
+          </div>
+          
+          <a href="#" id="sendEmail" class="btn btn-primary btn-lg">{translations[currentLanguage.get()].contact.form.send}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sendEmailBtn = document.getElementById('sendEmail');
+      const spamCheck = document.getElementById('contact_me_by_fax');
+      
+      sendEmailBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Anti-spam check
+        if (spamCheck.checked) {
+          return;
+        }
+        
+        const name = document.getElementById('name').value.trim();
+        const company = document.getElementById('company').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const message = document.getElementById('message').value.trim();
+        
+        // Basic validation
+        if (!name || !company || !email || !message) {
+          const lang = currentLanguage.get();
+          alert(translations[lang].contact.form.required);
+          return;
+        }
+        
+        // Construct email body
+        const emailBody = `
+Navn: ${name}
+Virksomhed: ${company}
+Email: ${email}
+Telefon: ${phone}
+
+Besked:
+${message}
+        `.trim();
+        
+        // Create mailto link
+        const mailtoLink = `mailto:fritslyneborg@gmail.com?subject=Workshop forespørgsel fra ${name}&body=${encodeURIComponent(emailBody)}`;
+        
+        // Open email client
+        window.open(mailtoLink, '_blank');
+      });
+    });
+  </script>
+</section>
+
+<style>
+  .contact {
+    background: linear-gradient(180deg, var(--color-gray-50) 0%, var(--color-gray-100) 100%);
+  }
+  
+  .contact-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  
+  .contact-info h2 {
+    font-size: 2rem;
+    margin-bottom: var(--space-3);
+    color: var(--color-gray-900);
+  }
+  
+  .contact-info p {
+    color: var(--color-gray-700);
+    margin-bottom: var(--space-4);
+    line-height: 1.6;
+  }
+  
+  .contact-form {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: var(--space-4);
+  }
+  
+  .form-group {
+    margin-bottom: var(--space-3);
+  }
+  
+  label {
+    display: block;
+    margin-bottom: var(--space-1);
+    color: var(--color-gray-700);
+    font-weight: 500;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: var(--space-2);
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: var(--color-gray-50);
+  }
+  
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    margin-top: var(--space-2);
+  }
+
+  #sendEmail {
+    display: block;
+    width: 100%;
+    margin-top: var(--space-2);
+    text-align: center;
+  }
+  
+  @media (min-width: 768px) {
+    .contact-content {
+      flex-direction: row;
+    }
+    
+    .contact-info {
+      flex: 1;
+      padding-right: var(--space-4);
+    }
+    
+    .contact-form {
+      flex: 1;
+      padding: var(--space-5);
+    }
+  }
+</style>

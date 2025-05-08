@@ -1,0 +1,220 @@
+---
+import { translations } from '../i18n/translations';
+import { currentLanguage } from '../store/language';
+---
+
+<script>
+  import { translations } from '../i18n/translations';
+  import { currentLanguage } from '../store/language';
+  
+  currentLanguage.subscribe(() => {
+    const lang = currentLanguage.get();
+    const t = translations[lang].program;
+    
+    document.querySelector('.program-heading h2').textContent = t.title;
+    document.querySelector('.program-heading p').textContent = t.subtitle;
+    document.querySelector('.program-title h3').textContent = t.mainTitle;
+    document.querySelector('.program-title p').textContent = t.subheading;
+    
+    const durationTitle = document.querySelector('.program-info:nth-child(1) h4');
+    const durationText = document.querySelector('.program-info:nth-child(1) p');
+    durationTitle.textContent = t.duration.title;
+    durationText.textContent = t.duration.text;
+    
+    const purposeTitle = document.querySelector('.program-info:nth-child(2) h4');
+    const purposeText = document.querySelector('.program-info:nth-child(2) p');
+    purposeTitle.textContent = t.purpose.title;
+    purposeText.textContent = t.purpose.text;
+  });
+</script>
+
+<section id="program" class="section program">
+  <div class="container">
+    <div class="program-heading" data-aos="fade-up">
+      <h2>{translations[currentLanguage.get()].program.title}</h2>
+      <p>{translations[currentLanguage.get()].program.subtitle}</p>
+    </div>
+    
+    <div class="program-content" data-aos="fade-up" data-aos-delay="100">
+      <div class="program-card">
+        <div class="program-title">
+          <h3>{translations[currentLanguage.get()].program.mainTitle}</h3>
+          <p>{translations[currentLanguage.get()].program.subheading}</p>
+        </div>
+        
+        <div class="program-details">
+          <div class="program-info">
+            <h4>{translations[currentLanguage.get()].program.duration.title}</h4>
+            <p>{translations[currentLanguage.get()].program.duration.text}</p>
+          </div>
+          
+          <div class="program-info">
+            <h4>{translations[currentLanguage.get()].program.purpose.title}</h4>
+            <p>{translations[currentLanguage.get()].program.purpose.text}</p>
+          </div>
+          
+          <div class="program-info">
+            <h4>Indhold:</h4>
+            <ul>
+              <li>Hvad AI betyder i praksis – ikke bare som teknologi, men som strategisk værktøj</li>
+              <li>Relevante anvendelser i jeres branche</li>
+              <li>Strategiske spørgsmål bestyrelsen bør stille ledelsen</li>
+              <li>Konkrete cases og værktøjer</li>
+              <li>Hvordan man kommer i gang på en ansvarlig og effektiv måde</li>
+            </ul>
+          </div>
+          
+          <div class="program-info">
+            <h4>Målgruppe:</h4>
+            <p>Bestyrelsesmedlemmer og direktion</p>
+          </div>
+          
+          <div class="program-info">
+            <h4>Udbytte:</h4>
+            <ul>
+              <li>Et fælles sprog og forståelsesramme for AI</li>
+              <li>Klarhed over hvor og hvordan AI, Agenter, Automation kan give værdi</li>
+              <li>En bedre position til at tage informerede og fremtidssikrede beslutninger</li>
+            </ul>
+          </div>
+          
+          <div class="program-info">
+            <h4>Kort sagt:</h4>
+            <p>
+              En praktisk og forståelig tilgang til AI, der giver jer viden, sprog og værktøjer til at sikre, 
+              at jeres indsats matcher det tempo og den alvor, udviklingen kræver.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .program {
+    background: linear-gradient(180deg, var(--color-gray-100) 0%, var(--color-white) 100%);
+  }
+  
+  .program-heading {
+    text-align: center;
+    margin-bottom: var(--space-5);
+  }
+  
+  .program-heading h2 {
+    font-size: 2rem;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-2);
+  }
+  
+  .program-heading p {
+    color: var(--color-gray-600);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .program-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .program-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  .program-title {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    color: var(--color-white);
+    padding: var(--space-5);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .program-title::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+  }
+  
+  .program-title h3 {
+    margin-bottom: var(--space-1);
+    font-size: 1.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .program-title p {
+    opacity: 0.9;
+    font-weight: 500;
+  }
+  
+  .program-details {
+    padding: var(--space-4);
+  }
+  
+  .program-info {
+    margin-bottom: var(--space-4);
+  }
+  
+  .program-info:last-child {
+    margin-bottom: 0;
+  }
+  
+  .program-info h4 {
+    font-size: 1.2rem;
+    margin-bottom: var(--space-2);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+  }
+  
+  .program-info p {
+    color: var(--color-gray-700);
+    line-height: 1.6;
+  }
+  
+  .program-info ul {
+    list-style-type: none;
+    padding-left: var(--space-3);
+  }
+  
+  .program-info ul li {
+    position: relative;
+    padding-left: var(--space-3);
+    margin-bottom: var(--space-2);
+    color: var(--color-gray-700);
+    line-height: 1.6;
+  }
+  
+  .program-info ul li::before {
+    content: "•";
+    color: var(--color-primary);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+  }
+  
+  @media (min-width: 768px) {
+    .program-title h3 {
+      font-size: 1.75rem;
+    }
+    
+    .program-details {
+      padding: var(--space-5);
+    }
+  }
+</style>

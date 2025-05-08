@@ -1,0 +1,73 @@
+---
+import { currentLanguage } from '../store/language';
+---
+
+<div class="language-selector">
+  <button class="lang-btn" data-lang="da">
+    <img src="https://flagcdn.com/w40/dk.png" width="20" height="15" alt="Danish flag" loading="lazy">
+  </button>
+  <button class="lang-btn" data-lang="en">
+    <img src="https://flagcdn.com/w40/gb.png" width="20" height="15" alt="English flag" loading="lazy">
+  </button>
+</div>
+
+<script>
+  import { translations } from '../i18n/translations';
+  import { currentLanguage, setLanguage } from '../store/language';
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.lang-btn');
+    
+    const updateActiveState = () => {
+      buttons.forEach(btn => {
+        const lang = btn.getAttribute('data-lang');
+        btn.classList.toggle('active', lang === currentLanguage.get());
+      });
+    };
+    
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        if (lang === 'da' || lang === 'en') {
+          setLanguage(lang);
+          updateActiveState();
+        }
+      });
+    });
+    
+    // Set initial state
+    updateActiveState();
+  });
+</script>
+
+<style>
+  .language-selector {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+  }
+  
+  .lang-btn {
+    background: none;
+    border: 2px solid transparent;
+    padding: 2px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+    opacity: 0.6;
+  }
+  
+  .lang-btn:hover {
+    opacity: 0.8;
+  }
+  
+  .lang-btn.active {
+    border-color: var(--color-primary);
+    opacity: 1;
+  }
+  
+  .lang-btn img {
+    display: block;
+    border-radius: 2px;
+  }
+</style>

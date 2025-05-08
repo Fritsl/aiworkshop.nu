@@ -1,0 +1,146 @@
+---
+import { translations } from '../i18n/translations';
+import { currentLanguage } from '../store/language';
+---
+
+<script>
+  import { translations } from '../i18n/translations';
+  import { currentLanguage } from '../store/language';
+  
+  currentLanguage.subscribe(() => {
+    const lang = currentLanguage.get();
+    const t = translations[lang].footer;
+    
+    document.querySelector('.footer-logo p').textContent = t.description;
+    document.querySelector('.footer-links h4').textContent = t.quickLinks;
+    document.querySelector('.footer-social h4').textContent = t.followUs;
+    document.querySelector('.footer-bottom p').textContent = t.copyright;
+  });
+</script>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <a href="/">AI Workshop</a>
+        <p>{translations[currentLanguage.get()].footer.description}</p>
+      </div>
+      
+      <div class="footer-links">
+        <h4>{translations[currentLanguage.get()].footer.quickLinks}</h4>
+        <ul>
+          <li><a href="#om">{translations[currentLanguage.get()].nav.about}</a></li>
+          <li><a href="#program">{translations[currentLanguage.get()].nav.program}</a></li>
+          <li><a href="#about-us">{translations[currentLanguage.get()].nav.aboutUs}</a></li>
+          <li><a href="#kontakt">{translations[currentLanguage.get()].nav.contact}</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-social">
+        <h4>{translations[currentLanguage.get()].footer.followUs}</h4>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/frits-lyneborg/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>{translations[currentLanguage.get()].footer.copyright}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-gray-900);
+    color: var(--color-gray-300);
+    padding: var(--space-6) 0 var(--space-3);
+  }
+  
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin-bottom: var(--space-5);
+  }
+  
+  .footer-logo a {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--color-white);
+    margin-bottom: var(--space-2);
+    display: inline-block;
+  }
+  
+  .footer-logo p {
+    color: var(--color-gray-400);
+    margin-top: var(--space-2);
+    font-size: 0.875rem;
+  }
+  
+  .footer-links h4, .footer-social h4 {
+    color: var(--color-white);
+    margin-bottom: var(--space-3);
+    font-size: 1.125rem;
+  }
+  
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links ul li {
+    margin-bottom: var(--space-2);
+  }
+  
+  .footer-links ul li a {
+    color: var(--color-gray-400);
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links ul li a:hover {
+    color: var(--color-primary-light);
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: var(--space-3);
+  }
+  
+  .social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-gray-800);
+    color: var(--color-white);
+    transition: all 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-3px);
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid var(--color-gray-800);
+    padding-top: var(--space-3);
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-gray-500);
+  }
+  
+  @media (min-width: 768px) {
+    .footer-content {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+</style>

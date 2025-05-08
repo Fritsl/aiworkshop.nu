@@ -1,0 +1,101 @@
+---
+import { translations } from '../i18n/translations';
+import { currentLanguage } from '../store/language';
+---
+
+<script>
+  import { translations } from '../i18n/translations';
+  import { currentLanguage } from '../store/language';
+  
+  currentLanguage.subscribe(() => {
+    const lang = currentLanguage.get();
+    document.querySelector('.about h2').textContent = translations[lang].about.title;
+    const paragraphs = document.querySelectorAll('.about-text p');
+    translations[lang].about.description.forEach((text, index) => {
+      paragraphs[index].textContent = text;
+    });
+  });
+</script>
+
+<section id="om" class="section about">
+  <div class="container">
+    <div class="about-content">
+      <div class="about-text" data-aos="fade-right">
+        <h2>{translations[currentLanguage.get()].about.title}</h2>
+        {translations[currentLanguage.get()].about.description.map(text => (
+          <p>{text}</p>
+        ))}
+      </div>
+      <div class="about-image" data-aos="fade-left">
+        <div class="image-wrapper">
+          <img 
+            src="https://media.licdn.com/dms/image/v2/D4D22AQFb1ypp0Uur7Q/feedshare-shrink_2048_1536/B4DZZjfg_EG0Ao-/0/1745425929414?e=1749081600&v=beta&t=wGrDp25kZDvTYKu7J8uCgL7yniTRogmYry9xSnvjzsk" 
+            alt="Workshop deltagere diskuterer AI strategi" 
+            width="600" 
+            height="400"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: linear-gradient(180deg, var(--color-white) 0%, var(--color-gray-100) 100%);
+    padding-top: calc(var(--space-6) + 80px);
+    margin-top: calc(var(--space-6) * -1);
+  }
+  
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  
+  .about-text h2 {
+    font-size: 2rem;
+    margin-bottom: var(--space-4);
+    color: var(--color-gray-900);
+  }
+  
+  .about-text p {
+    margin-bottom: var(--space-3);
+    line-height: 1.6;
+    color: var(--color-gray-700);
+  }
+  
+  .image-wrapper {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .about-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .about-image:hover img {
+    transform: scale(1.02);
+  }
+  
+  @media (min-width: 768px) {
+    .about-content {
+      flex-direction: row;
+      align-items: center;
+    }
+    
+    .about-text {
+      flex: 1;
+      padding-right: var(--space-4);
+    }
+    
+    .about-image {
+      flex: 1;
+    }
+  }
+</style>

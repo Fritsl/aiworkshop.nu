@@ -1,0 +1,180 @@
+---
+import OrganizationChart from './OrganizationChart.astro';
+---
+
+<section id="transformation" class="section transformation">
+  <div class="container">
+    <div class="transformation-heading" data-aos="fade-up">
+      <h2>Fra Traditionel til AI-Drevet Virksomhed</h2>
+      <p>Se hvordan din virksomhed kan transformeres med en strategisk AI-tilgang</p>
+    </div>
+    
+    <div class="transformation-content" data-aos="fade-up">
+      <div class="transformation-item active" data-state="traditional">
+        <h3>En Gammeldags Virksomhed</h3>
+        <div class="diagram-container">
+          <OrganizationChart id="traditional-chart" type="traditional" />
+        </div>
+        <div class="diagram-description">
+          <p>
+            Den traditionelle organisationsstruktur mangler dedikeret AI-ledelse, 
+            hvilket resulterer i ukoordinerede digitale initiativer og manglende 
+            strategisk retning for AI-implementering.
+          </p>
+          <button class="btn btn-primary transform-btn">
+            Se Fremtidens Virksomhed
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="transformation-item" data-state="modern">
+        <h3>Den Virksomhed I Kan Blive</h3>
+        <div class="diagram-container">
+          <OrganizationChart id="modern-chart" type="modern" />
+        </div>
+        <div class="diagram-description">
+          <p>
+            Med en dedikeret AI-ledelse opnår virksomheden strategisk retning, 
+            governance og transparens. AI-lederen kan fungere som modvægt til 
+            ledelsens naturlige træghed over for egen disruption.
+          </p>
+          <button class="btn btn-secondary transform-btn">
+            Se Traditionel Virksomhed
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5"></path>
+              <path d="m12 19-7-7 7-7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.transformation-item');
+      const buttons = document.querySelectorAll('.transform-btn');
+      
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          items.forEach(item => {
+            item.classList.toggle('active');
+          });
+        });
+      });
+    });
+  </script>
+</section>
+
+<style>
+  .transformation {
+    background-color: var(--color-white);
+    position: relative;
+  }
+  
+  .transformation-heading {
+    text-align: center;
+    margin-bottom: var(--space-6);
+  }
+  
+  .transformation-heading h2 {
+    font-size: 2rem;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-2);
+  }
+  
+  .transformation-heading p {
+    color: var(--color-gray-600);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .transformation-content {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .transformation-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-gray-100);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-md);
+    transition: all 0.5s ease;
+    opacity: 0;
+    transform: translateX(100px);
+    pointer-events: none;
+  }
+  
+  .transformation-item.active {
+    position: relative;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+  
+  .transformation-item h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: var(--space-4);
+    color: var(--color-gray-900);
+  }
+  
+  .transformation-item:first-child h3 {
+    color: var(--color-gray-700);
+  }
+  
+  .transformation-item:last-child h3 {
+    color: var(--color-primary);
+  }
+  
+  .diagram-container {
+    margin-bottom: var(--space-3);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    background: white;
+    padding: var(--space-4);
+  }
+  
+  .diagram-description {
+    text-align: center;
+    color: var(--color-gray-700);
+    line-height: 1.6;
+  }
+  
+  .transform-btn {
+    margin-top: var(--space-4);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  
+  .transform-btn svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  .transform-btn:hover svg {
+    transform: translateX(4px);
+  }
+  
+  @media (min-width: 768px) {
+    .transformation-item {
+      padding: var(--space-5);
+    }
+    
+    .transformation-item h3 {
+      font-size: 1.75rem;
+    }
+  }
+</style>

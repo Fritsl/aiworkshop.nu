@@ -1,0 +1,171 @@
+---
+// AboutUs component for the AI workshop
+---
+
+<section id="about-us" class="section about-us">
+  <div class="container">
+    <div class="about-us-heading" data-aos="fade-up">
+      <h2>Om Os</h2>
+      <p>Projekt AI Workshop er et joint venture mellem erfarne erhvervsledere og teknologieksperter. Formålet er at støtte Danske virksomheder bedst muligt i en tid under stor forandring.</p>
+    </div>
+    
+    <div class="team-grid" data-aos="fade-up" data-aos-delay="100">
+      <div class="team-member">
+        <div class="member-image">
+          <img 
+            src="https://media.licdn.com/dms/image/v2/C4E03AQFXvHsEcj_CHw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1516230884170?e=1752105600&v=beta&t=Y9bp0lbN3QTS7znoTNv6zBkfI4Q4HIXOh1kFVX1Zqjo"
+            alt="Lars Kolind"
+            width="300"
+            height="300"
+            style="filter: grayscale(100%) contrast(120%);"
+          />
+        </div>
+        <div class="member-info">
+          <h3>Lars Kolind</h3>
+          <p class="member-title">Serial Entrepreneur</p>
+          <a href="https://www.linkedin.com/in/larskolind/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+            <span>LinkedIn Profil</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="member-image">
+          <img 
+            src="https://media.licdn.com/dms/image/v2/D4D03AQHItuCR-wbplg/profile-displayphoto-shrink_400_400/B4DZXrT9MMHwAg-/0/1743409632410?e=1752105600&v=beta&t=51yWoU9BmM5yx-4rmLx3guz_7YE7vFqwlFJPo6pjMFQ"
+            alt="Frits Lyneborg"
+            width="300"
+            height="300"
+          />
+        </div>
+        <div class="member-info">
+          <h3>Frits Lyneborg</h3>
+          <p class="member-title">Technologist</p>
+          <a href="https://www.linkedin.com/in/frits-lyneborg/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+            <span>LinkedIn Profil</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-us-text" data-aos="fade-up" data-aos-delay="200">
+      <p>
+        Projekt AI Workshop er opstået som et joint venture mellem serial entrepreneur Lars Kolind 
+        og technologist Frits Lyneborg, sammen med et netværk af erfarne erhvervsledere og teknologieksperter.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-us {
+    background: linear-gradient(180deg, var(--color-gray-50) 0%, var(--color-white) 100%);
+  }
+
+  .about-us-heading {
+    text-align: center;
+    margin-bottom: var(--space-6);
+  }
+
+  .about-us-heading h2 {
+    font-size: 2rem;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-2);
+  }
+
+  .about-us-heading p {
+    color: var(--color-gray-600);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .team-grid {
+    display: grid;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+
+  .team-member {
+    text-align: center;
+  }
+
+  .member-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto var(--space-4);
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .team-member:hover .member-image img {
+    transform: scale(1.05);
+  }
+
+  .member-info h3 {
+    font-size: 1.5rem;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-2);
+  }
+
+  .member-title {
+    color: var(--color-gray-600);
+    font-size: 1.125rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .linkedin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-700);
+    transition: all 0.3s ease;
+  }
+
+  .linkedin-link:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    transform: translateY(-2px);
+  }
+
+  .about-us-text {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--color-gray-700);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-8);
+    }
+
+    .member-image {
+      width: 250px;
+      height: 250px;
+    }
+  }
+</style>

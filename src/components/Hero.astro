@@ -1,0 +1,114 @@
+---
+import { translations } from '../i18n/translations';
+import { currentLanguage } from '../store/language';
+---
+
+{/* Get translations based on current language */}
+<script>
+  import { translations } from '../i18n/translations';
+  import { currentLanguage } from '../store/language';
+  
+  currentLanguage.subscribe(() => {
+    const lang = currentLanguage.get();
+    document.querySelector('.hero h1').textContent = translations[lang].hero.title;
+    document.querySelector('.hero p').textContent = translations[lang].hero.subtitle;
+    document.querySelector('.hero .btn-white').textContent = translations[lang].hero.cta.about;
+    document.querySelector('.hero .btn-secondary').textContent = translations[lang].hero.cta.contact;
+  });
+</script>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1 data-aos="fade-up">
+        {translations[currentLanguage.get()].hero.title}
+      </h1>
+      <p data-aos="fade-up" data-aos-delay="100">
+        {translations[currentLanguage.get()].hero.subtitle}
+      </p>
+      <div class="hero-cta" data-aos="fade-up" data-aos-delay="200">
+        <a href="#om" class="btn btn-white btn-lg">{translations[currentLanguage.get()].hero.cta.about}</a>
+        <a href="#kontakt" class="btn btn-secondary btn-lg">{translations[currentLanguage.get()].hero.cta.contact}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-top: var(--space-6);
+    background-image: url('https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=1920');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--color-white);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(43, 108, 176, 0.95) 0%,
+      rgba(66, 153, 225, 0.8) 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: var(--space-7) 0;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-5);
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 3.5rem;
+    }
+    
+    p {
+      font-size: 1.5rem;
+    }
+    
+    .hero-cta {
+      flex-direction: row;
+      gap: var(--space-4);
+    }
+  }
+</style>

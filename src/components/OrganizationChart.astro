@@ -1,0 +1,243 @@
+---
+interface Props {
+  id: string;
+  type: 'traditional' | 'modern';
+}
+
+const { id, type } = Astro.props;
+---
+
+<div class="org-chart-wrapper">
+  <div class="org-chart" id={id} data-type={type}>
+    <svg></svg>
+  </div>
+</div>
+
+<script>
+  import { hierarchy, tree } from 'd3-hierarchy';
+  import { select } from 'd3-selection';
+
+  function createChart(element) {
+    const id = element.id;
+    const type = element.dataset.type;
+    
+    // Clear any existing content
+    element.querySelector('svg').innerHTML = '';
+    
+    // Get container width
+    const minWidth = 1200; // Minimum width to ensure visibility
+    
+    const data = type === 'traditional' ? {
+      name: 'Bestyrelse',
+      children: [{
+        name: 'CEO',
+        highlight: 'yellow',
+        children: [
+          { 
+            name: 'Økonomi & Regnskab',
+            width: 180
+          },
+          { 
+            name: 'IT',
+            width: 80
+          },
+          { 
+            name: 'Produktion',
+            width: 120
+          },
+          { 
+            name: 'Salg & Marketing',
+            width: 180
+          },
+          { 
+            name: 'HR',
+            width: 80
+          }
+        ]
+      }]
+    } : {
+      name: 'Bestyrelse',
+      children: [
+        {
+          name: 'Head of AI and Automation',
+          highlight: 'yellow',
+          children: [
+            { 
+              name: 'AI Governance',
+              width: 140,
+              highlight: 'navy',
+              note: 'Etik, GDPR, datasikkerhed, ansvarlighed, audit, risikostyring, transparens, politikker for ansvarlig AI-brug.'
+            },
+            { 
+              name: 'Automatisering af forretningsprocesser',
+              width: 280,
+              highlight: 'navy'
+            },
+            { 
+              name: 'AI-strategi & innovation',
+              width: 200,
+              highlight: 'navy'
+            }
+          ]
+        },
+        {
+          name: 'CEO',
+          highlight: 'yellow',
+          children: [
+            { 
+              name: 'Økonomi & Regnskab',
+              width: 180
+            },
+            { 
+              name: 'IT',
+              width: 80
+            },
+            { 
+              name: 'Produktion',
+              width: 120
+            },
+            { 
+              name: 'Salg & Marketing',
+              width: 180
+            },
+            { 
+              name: 'HR',
+              width: 80
+            }
+          ]
+        }
+      ]
+    };
+
+    const margin = { top: 40, right: 40, bottom: 40, left: 40 };
+    const width = 1000;
+    const height = 600;
+
+    const treeLayout = tree()
+      .size([width/2 - margin.left - margin.right, height - margin.top - margin.bottom]);
+
+    const root = hierarchy(data);
+    const treeData = treeLayout(root);
+
+    const svg = select(`#${id} svg`)
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', `translate(${width/2},${margin.top + 20})`);
+
+    // Create links with parent check
+    svg.selectAll('.link')
+      .data(treeData.links())
+      .enter()
+      .append('path')
+      .attr('class', 'link')
+      .attr('d', d => {
+        if (!d.parent) {
+          return ''; // Skip drawing path for root node
+        }
+        return `
+          M${d.x},${d.y}
+          C${d.x},${(d.y + d.parent.y) / 2}
+          ${d.parent.x},${(d.y + d.parent.y) / 2}
+          ${d.parent.x},${d.parent.y}
+        `;
+      });
+
+    const nodes = svg.selectAll('.node')
+      .data(treeData.descendants())
+      .enter()
+      .append('g')
+      .attr('class', 'node')
+      .attr('transform', d => `translate(${d.x},${d.y + 40})`);
+
+    nodes.append('rect')
+      .attr('class', d => d.data.highlight ? `highlight-${d.data.highlight}` : '')
+      .attr('x', d => -(d.data.width || 100) / 2)
+      .attr('y', -20)
+      .attr('width', d => d.data.width || 100)
+      .attr('height', 40)
+      .attr('rx', 5);
+
+    nodes.append('text')
+      .attr('dy', '.35em')
+      .attr('text-anchor', 'middle')
+      .text(d => d.data.name);
+
+    // Add notes
+    nodes.filter(d => d.data.note)
+      .append('foreignObject')
+      .attr('x', d => -(d.data.width || 100) / 2)
+      .attr('y', 30)
+      .attr('width', d => d.data.width || 100)
+      .attr('height', 80)
+      .append('xhtml:div')
+      .attr('class', 'note')
+      .text(d => d.data.note);
+  }
+
+  // Initialize charts when the component is mounted
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.org-chart').forEach(createChart);
+  });
+</script>
+
+<style>
+  .org-chart-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+  }
+
+  .org-chart {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 600px;
+  }
+
+  :global(.node rect) {
+    fill: var(--color-white);
+    stroke: var(--color-gray-300);
+    stroke-width: 2px;
+  }
+
+  :global(.highlight-yellow rect) {
+    fill: #ffd700;
+    stroke: #e6c200;
+  }
+
+  :global(.node text) {
+    font-size: 14px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    dominant-baseline: middle;
+  }
+
+  :global(.link) {
+    fill: none;
+    stroke: var(--color-gray-300);
+    stroke-width: 2px;
+  }
+
+  :global(.highlight-navy) {
+    fill: #1e40af !important;
+    stroke: #1e3a8a;
+  }
+
+  :global(.highlight-navy + text) {
+    fill: var(--color-white);
+  }
+
+  :global(.note) {
+    background: #E5F6FD;
+    padding: 8px;
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--color-gray-900);
+    box-shadow: var(--shadow-sm);
+  }
+</style>
