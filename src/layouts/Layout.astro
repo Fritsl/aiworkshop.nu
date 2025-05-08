@@ -6,23 +6,53 @@ import '../styles/global.css';
 interface Props {
 	title?: string;
 	description?: string;
+	ogImage?: string;
 }
 
 // Default values
 const { 
-	title = "AI Workshop for Bestyrelser og Ledere", 
-	description = "Tag det første seriøse skridt mod at bruge AI og automatisering i din virksomhed med vores workshop designet til bestyrelsesmedlemmer, virksomhedsejere og direktører."
+	title = "AI Workshop for Bestyrelser og Ledere | AI Workshop", 
+	description = "Tag det første seriøse skridt mod at bruge AI og automatisering i din virksomhed. Workshop designet til bestyrelsesmedlemmer og direktører der vil forstå AI's muligheder.",
+	ogImage = "https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg"
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, "https://aiworkshop.nu");
 ---
 
 <!doctype html>
 <html lang="da">
 	<head>
 		<meta charset="UTF-8" />
+		<link rel="canonical" href={canonicalURL} />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:site_name" content="AI Workshop" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:locale" content="da_DK" />
+		<meta property="og:locale:alternate" content="en_GB" />
+		
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={canonicalURL} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={ogImage} />
+		
+		<!-- Keywords -->
+		<meta name="keywords" content="AI workshop, kunstig intelligens, bestyrelse, direktør, ledelse, AI strategi, digitalisering, automation, virksomhedsledelse, AI implementering, AI kursus, AI træning, AI uddannelse, AI konsulent, AI rådgivning" />
+		
+		<!-- Additional SEO -->
+		<meta name="robots" content="index, follow" />
+		<meta name="author" content="Lars Kolind & Frits Lyneborg" />
+		
 		<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 		
 		<!-- Google Fonts -->
@@ -31,6 +61,37 @@ const {
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 		
 		<title>{title}</title>
+		
+		<!-- Structured Data -->
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "EducationalOrganization",
+				"name": "AI Workshop",
+				"url": "https://aiworkshop.nu",
+				"description": "AI Workshop for bestyrelser og direktører der vil forstå AI's muligheder og implementere det i deres virksomhed. En dags workshop der giver konkret viden om AI implementering.",
+				"telephone": "",
+				"email": "fritslyneborg@gmail.com",
+				"address": {
+					"@type": "PostalAddress",
+					"addressCountry": "DK"
+				},
+				"offers": {
+					"@type": "Offer",
+					"name": "AI Workshop for Bestyrelser",
+					"description": "En 1-dags workshop der giver konkret viden om AI implementering",
+					"availability": "https://schema.org/InStock"
+				},
+				"sameAs": [
+					"https://www.linkedin.com/in/frits-lyneborg/",
+					"https://www.linkedin.com/in/larskolind/"
+				],
+				"areaServed": {
+					"@type": "Country",
+					"name": "Denmark"
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<slot />
